@@ -1,0 +1,35 @@
+{
+  "name": "skillbox3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@vue/runtime-core": "^3.3.4",
+    "axios": "^1.4.0",
+    "core-js": "^3.8.3",
+    "vue": "^3.2.36",
+    "vue-router": "^4.0.13",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.3.4",
+    "@vue/eslint-config-airbnb": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.15.0",
+    "eslint-plugin-vuejs-accessibility": "^1.1.0",
+    "stylus": "^0.55.0",
+    "stylus-loader": "^6.1.0"
+  }
+}
