@@ -11,10 +11,13 @@
 
     <div class="content__catalog">
 
+      <!--
       <ProductFilter v-model:price-from="filterPriceFrom" v-model:price-to="filterPriceTo"
         v-model:category-id="filterCategoryId" v-model:color-id="filterColorId" v-model:material-id="filterMaterialId"
         v-model:season-id="filterSeasonId" />
-
+-->
+      <ProductFilter v-model:price-from="filterPriceFrom" v-model:price-to="filterPriceTo"
+        v-model:category-id="filterCategoryId" v-model:color-id="filterColorId" />
       <section class="catalog">
         <div v-if="productsLoading">Загрузка товаров...</div>
         <div v-if="productsLoadingFailed">Произошла ошибка при загрузке товаров! <button>
@@ -45,8 +48,8 @@ export default {
       filterPriceTo: 0,
       filterCategoryId: 0,
       filterColorId: 0,
-      filterMaterialId: 0,
-      filterSeasonId: 0,
+      //  filterMaterialId: 0,
+      //   filterSeasonId: 0,
 
       page: 1,
       productsPerPage: 6,
@@ -61,12 +64,19 @@ export default {
   computed: {
     products() {
       return this.productsData ? this.productsData.items.map((product) => {
+        let image = '';
+        if (product.colors[0].gallery[0] != null) {
+          // Если есть только один цвет, используйте его изображение
+          image = product.colors[0].gallery[0].file.url;
+        } else {
+          // Если есть массив цветов, используйте изображение первого цвета
+          image = 'здесь нет изображения';
+        }
         return {
           ...product,
-          image: product.colors[0].gallery[0].file.url,
+          image,
         };
-      })
-        : [];
+      }) : [];
     },
     countProducts() {
       return this.productsData ? this.productsData.pagination.total : 0;
@@ -82,13 +92,13 @@ export default {
     filterColorId() {
       this.loadProducts();
     },
-    filterMaterialId() {
+    /*  filterMaterialId() {
       this.loadProducts();
     },
     filterSeasonId() {
       this.loadProducts();
     },
-    filterPriceTo() {
+   */ filterPriceTo() {
       this.loadProducts();
     },
     filterCategoryId() {
@@ -109,9 +119,9 @@ export default {
               categoryId: this.filterCategoryId,
               minPrice: this.filterPriceFrom,
               maxPrice: this.filterPriceTo,
-              colorId: this.filterColorId,
-              materialId: this.filterMaterialId,
-              seasonId: this.filterSeasonId,
+              'colorIds[]': this.filterColorId,
+              //  materialId: this.filterMaterialId,
+              //  seasonId: this.filterSeasonId,
             },
           })
           .then((response) => { this.productsData = response.data; })
