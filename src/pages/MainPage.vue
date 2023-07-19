@@ -65,12 +65,9 @@ export default {
     products() {
       return this.productsData ? this.productsData.items.map((product) => {
         let image = '';
-        if (product.colors[0].gallery[0] != null) {
+        if (product.colors[0].gallery != null) {
           // Если есть только один цвет, используйте его изображение
           image = product.colors[0].gallery[0].file.url;
-        } else {
-          // Если есть массив цветов, используйте изображение первого цвета
-          image = 'здесь нет изображения';
         }
         return {
           ...product,
