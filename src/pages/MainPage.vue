@@ -11,13 +11,9 @@
 
     <div class="content__catalog">
 
-      <!--
       <ProductFilter v-model:price-from="filterPriceFrom" v-model:price-to="filterPriceTo"
         v-model:category-id="filterCategoryId" v-model:color-id="filterColorId" v-model:material-id="filterMaterialId"
         v-model:season-id="filterSeasonId" />
--->
-      <ProductFilter v-model:price-from="filterPriceFrom" v-model:price-to="filterPriceTo"
-        v-model:category-id="filterCategoryId" v-model:color-id="filterColorId" />
       <section class="catalog">
         <div v-if="productsLoading">Загрузка товаров...</div>
         <div v-if="productsLoadingFailed">Произошла ошибка при загрузке товаров! <button>
@@ -48,8 +44,8 @@ export default {
       filterPriceTo: 0,
       filterCategoryId: 0,
       filterColorId: 0,
-      //  filterMaterialId: 0,
-      //   filterSeasonId: 0,
+      filterMaterialId: 0,
+      filterSeasonId: 0,
 
       page: 1,
       productsPerPage: 6,
@@ -89,13 +85,13 @@ export default {
     filterColorId() {
       this.loadProducts();
     },
-    /*  filterMaterialId() {
+    filterMaterialId() {
       this.loadProducts();
     },
     filterSeasonId() {
       this.loadProducts();
     },
-   */ filterPriceTo() {
+    filterPriceTo() {
       this.loadProducts();
     },
     filterCategoryId() {
@@ -107,19 +103,36 @@ export default {
       this.productsLoading = true;
       this.productsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
+      const params = {
+        page: this.page,
+        limit: this.productsPerPage,
+      };
+
+      if (this.filterCategoryId !== 0) {
+        params.categoryId = this.filterCategoryId;
+      }
+      if (this.filterPriceFrom !== 0) {
+        params.minPrice = this.filterPriceFrom;
+      }
+      if (this.filterPriceTo !== 0) {
+        params.maxPrice = this.filterPriceTo;
+      }
+      if (this.filterColorId !== 0) {
+        params['colorIds[]'] = this.filterColorId;
+      }
+      console.log(this.filterMaterialId);
+      if (this.filterMaterialId !== 0) {
+        params['materialIds[]'] = this.filterMaterialId;
+      }
+
+      if (this.filterSeasonId !== 0) {
+        params['seasonIds[]'] = this.filterSeasonId;
+      }
+
       this.loadProductsTimer = setTimeout(() => {
         axios
           .get(`${API_BASE_URL}/api/products`, {
-            params: {
-              page: this.page,
-              limit: this.productsPerPage,
-              categoryId: this.filterCategoryId,
-              minPrice: this.filterPriceFrom,
-              maxPrice: this.filterPriceTo,
-              'colorIds[]': this.filterColorId,
-              //  materialId: this.filterMaterialId,
-              //  seasonId: this.filterSeasonId,
-            },
+            params,
           })
           .then((response) => { this.productsData = response.data; })
           .catch(() => { this.productsLoadingFailed = true; })
