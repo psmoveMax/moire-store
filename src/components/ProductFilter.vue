@@ -36,8 +36,7 @@
                         <label class="colors__label" :for="'color-' + color.id">
                             <input class="colors__radio sr-only" type="radio" :id="'color-' + color.id" name="color"
                                 :value="color.id" v-model.number="currentColorId">
-                            <span class="colors__value" :style="{ backgroundColor: color.code }"
-                                @click="selectColor(color.id)"></span>
+                            <span class="colors__value" :style="{ backgroundColor: color.code }"></span>
                         </label>
                     </li>
                 </ul>
@@ -50,9 +49,9 @@
                 <ul class="check-list">
                     <li class="check-list__item" v-for="material in  materials " :key="material.id">
                         <label class="check-list__label" :for="'material-' + material.id">
-                            <input class="check-list " type="checkbox" :id="'material-' + material.id" name="material"
-                                :value="material.id">
-                            <span class="check-list__desc" @click="selectMaterial(material.id)">
+                            <input class="check-list__check sr-only " type="checkbox" :id="'material-' + material.id"
+                                name="material" :value="material.id" v-model.number="currentMaterialId">
+                            <span class="check-list__desc">
                                 {{ material.title }}
                                 <span>({{ material.productsCount }})</span>
                             </span>
@@ -65,10 +64,10 @@
                 <legend class="form__legend">Коллекция</legend>
                 <ul class="check-list">
                     <li class="check-list__item" v-for="season in  seasons " :key="season.id">
-                        <label class="check-list__label" htmlFor="season">
-                            <input class="check-list sr-only" type="checkbox" name="season" :value="season.id"
-                                v-model.number="currentSeasonId">
-                            <span class="check-list__desc" :value="season.id">
+                        <label class="check-list__label" :for="'season-' + season.id">
+                            <input class="check-list__check sr-only  " type="checkbox" :id="'season-' + season.id"
+                                name="season" :value="season.id" v-model.number="currentSeasonId">
+                            <span class="check-list__desc">
                                 {{ season.title }}
                                 <span>({{ season.productsCount }})</span>
                             </span>
@@ -104,7 +103,7 @@ export default {
             colorsData: null,
             categoriesData: null,
             currentMaterialId: [],
-            currentSeasonId: 0,
+            currentSeasonId: [],
             materialsData: null,
             seasonsData: null,
         }
@@ -143,6 +142,7 @@ export default {
         },
         materialId(value) {
             console.log('materialFilter changed');
+            console.log(this.materialId);
             this.currentMaterialId = value;
         },
         seasonId(value) {
@@ -152,20 +152,8 @@ export default {
     },
 
     methods: {
-        selectColor(colorId) {
-            this.currentColorId = colorId;
-        },
-        selectMaterial(materialId) {
-            const indexOf = this.currentMaterialId.indexOf(materialId);
-            console.log(this.currentMaterialId);
-            console.log(indexOf);
-            if (indexOf >= 0) {
-                this.currentMaterialId.splice(indexOf, 1);
-            } else {
-
-                this.currentMaterialId.push(materialId);
-            }
-            console.log(this.currentMaterialId);
+        materialClick(materialId) {
+            console.log(materialId)
 
         },
         loadColors() {
@@ -190,8 +178,12 @@ export default {
             this.$emit('update:categoryId', this.currentCategoryId);
             this.$emit('update:colorId', this.currentColorId);
             console.log('TEST');
+            console.log(this.currentMaterialId);
+            console.log(this.materialId);
             this.$emit('update:materialId', this.currentMaterialId);
             console.log('TEST2');
+            console.log(this.materialId);
+            console.log(this.currentMaterialId);
             this.$emit('update:seasonId', this.currentSeasonId);
         },
         reset() {
@@ -199,7 +191,7 @@ export default {
             this.$emit('update:priceTo', 0);
             this.$emit('update:categoryId', 0);
             this.$emit('update:colorId', 0);
-            this.$emit('update:materialId', 0);
+            this.$emit('update:materialId', []);
             this.$emit('update:seasonId', 0);
         },
 

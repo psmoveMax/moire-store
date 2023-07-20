@@ -43,7 +43,7 @@ export default {
       filterPriceTo: 0,
       filterCategoryId: 0,
       filterColorId: 0,
-      filterMaterialId: 0,
+      filterMaterialId: [],
       filterSeasonId: 0,
 
       page: 1,
@@ -125,7 +125,6 @@ export default {
       if (this.filterMaterialId.length !== 0) {
         params['materialIds[]'] = this.filterMaterialId;
       }
-      console.log(this.filterSeasonId);
       if (this.filterSeasonId !== 0) {
         params['seasonIds[]'] = this.filterSeasonId;
       }

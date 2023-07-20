@@ -632,8 +632,10 @@ a {
   opacity: .3
 }
 
+
+
 .check-list__check:checked~.check-list__desc::after {
-  opacity: 1
+  opacity: .5
 }
 
 .breadcrumbs {
