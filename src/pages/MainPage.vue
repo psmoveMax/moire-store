@@ -28,7 +28,6 @@
 </template>
 
 <script>
-
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
@@ -86,6 +85,7 @@ export default {
       this.loadProducts();
     },
     filterMaterialId() {
+      console.log('material changed');
       this.loadProducts();
     },
     filterSeasonId() {
@@ -100,6 +100,7 @@ export default {
   },
   methods: {
     loadProducts() {
+      console.log('start loading load products');
       this.productsLoading = true;
       this.productsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
@@ -121,21 +122,22 @@ export default {
         params['colorIds[]'] = this.filterColorId;
       }
       console.log(this.filterMaterialId);
-      if (this.filterMaterialId !== 0) {
+      if (this.filterMaterialId.length !== 0) {
         params['materialIds[]'] = this.filterMaterialId;
       }
-
+      console.log(this.filterSeasonId);
       if (this.filterSeasonId !== 0) {
         params['seasonIds[]'] = this.filterSeasonId;
       }
 
       this.loadProductsTimer = setTimeout(() => {
+        console.log('axios');
         axios
           .get(`${API_BASE_URL}/api/products`, {
             params,
           })
           .then((response) => { this.productsData = response.data; })
-          .catch(() => { this.productsLoadingFailed = true; })
+          .catch(() => { console.log('warning'); this.productsLoadingFailed = true; })
           .then(() => { this.productsLoading = false; });
       }, 0);
     },

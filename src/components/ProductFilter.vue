@@ -142,6 +142,7 @@ export default {
             this.currentColorId = value;
         },
         materialId(value) {
+            console.log('materialFilter changed');
             this.currentMaterialId = value;
         },
         seasonId(value) {
@@ -188,7 +189,9 @@ export default {
             this.$emit('update:priceTo', this.currentPriceTo);
             this.$emit('update:categoryId', this.currentCategoryId);
             this.$emit('update:colorId', this.currentColorId);
+            console.log('TEST');
             this.$emit('update:materialId', this.currentMaterialId);
+            console.log('TEST2');
             this.$emit('update:seasonId', this.currentSeasonId);
         },
         reset() {
