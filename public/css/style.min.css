@@ -115,8 +115,10 @@ a {
   width: 1200px;
   margin: 0 auto;
   padding-left: 15px;
-  padding-right: 15px
+  padding-right: 15px;
 }
+
+
 
 .button {
   margin: 0;
@@ -314,7 +316,7 @@ a {
 .form__block {
   border: 0;
   padding: 0;
-  margin: 0 0 35px
+  margin: 0 0 55px;
 }
 
 .form__legend {
@@ -414,7 +416,7 @@ a {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  padding: 14px 35px 14px 18px;
+  padding: 0px 35px 14px 18px;
   color: #222;
   font-size: 16px;
   font-family: inherit;
@@ -564,7 +566,8 @@ a {
 .colors__label:focus .colors__value::before,
 .colors__label:hover .colors__value::before,
 .colors__radio:checked~.colors__value::before {
-  border-color: var(--border-color)
+  border-color: #e02d71;
+  opacity: .5;
 }
 
 .colors__radio:focus~.colors__value::before {
@@ -1291,7 +1294,8 @@ a {
   grid-gap: 20px;
   -webkit-box-pack: start;
   -ms-flex-pack: start;
-  justify-content: flex-start
+  justify-content: flex-start;
+  margin-bottom: 30px;
 }
 
 .item__row--center {
@@ -1442,8 +1446,6 @@ a {
   grid-row: 3/4
 }
 
-.filter__form {
-  background-color: wheat;
-}
+
 
 /*# sourceMappingURL=style.min.css.map */

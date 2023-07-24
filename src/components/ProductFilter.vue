@@ -141,8 +141,6 @@ export default {
             this.currentColorId = value;
         },
         materialId(value) {
-            console.log('materialFilter changed');
-            console.log(this.materialId);
             this.currentMaterialId = value;
         },
         seasonId(value) {
@@ -152,10 +150,6 @@ export default {
     },
 
     methods: {
-        materialClick(materialId) {
-            console.log(materialId)
-
-        },
         loadColors() {
             axios.get(API_BASE_URL + '/api/colors')
                 .then((response) => { this.colorsData = response.data; })
@@ -177,13 +171,7 @@ export default {
             this.$emit('update:priceTo', this.currentPriceTo);
             this.$emit('update:categoryId', this.currentCategoryId);
             this.$emit('update:colorId', this.currentColorId);
-            console.log('TEST');
-            console.log(this.currentMaterialId);
-            console.log(this.materialId);
             this.$emit('update:materialId', this.currentMaterialId);
-            console.log('TEST2');
-            console.log(this.materialId);
-            console.log(this.currentMaterialId);
             this.$emit('update:seasonId', this.currentSeasonId);
         },
         reset() {
@@ -192,7 +180,7 @@ export default {
             this.$emit('update:categoryId', 0);
             this.$emit('update:colorId', 0);
             this.$emit('update:materialId', []);
-            this.$emit('update:seasonId', 0);
+            this.$emit('update:seasonId', []);
         },
 
     },

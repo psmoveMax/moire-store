@@ -32,7 +32,7 @@ import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 import axios from 'axios';
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL, NOT_PIC_URL } from '@/config';
 
 export default {
   components: { ProductList, BasePagination, ProductFilter },
@@ -44,7 +44,7 @@ export default {
       filterCategoryId: 0,
       filterColorId: 0,
       filterMaterialId: [],
-      filterSeasonId: 0,
+      filterSeasonId: [],
 
       page: 1,
       productsPerPage: 6,
@@ -61,8 +61,9 @@ export default {
       return this.productsData ? this.productsData.items.map((product) => {
         let image = '';
         if (product.colors[0].gallery != null) {
-          // Если есть только один цвет, используйте его изображение
           image = product.colors[0].gallery[0].file.url;
+        } else {
+          image = NOT_PIC_URL;
         }
         return {
           ...product,
@@ -85,7 +86,6 @@ export default {
       this.loadProducts();
     },
     filterMaterialId() {
-      console.log('material changed');
       this.loadProducts();
     },
     filterSeasonId() {
@@ -121,7 +121,6 @@ export default {
       if (this.filterColorId !== 0) {
         params['colorIds[]'] = this.filterColorId;
       }
-      console.log(this.filterMaterialId);
       if (this.filterMaterialId.length !== 0) {
         params['materialIds[]'] = this.filterMaterialId;
       }

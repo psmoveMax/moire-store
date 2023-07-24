@@ -92,10 +92,17 @@ export default createStore({
           context.commit('syncCartProducts');
         });
     },
-    addProductToCart(context, { productId, amount }) {
+    addProductToCart(context, {
+      productId,
+      amount,
+      colorId,
+      sizeId,
+    }) {
       return axios.post(`${API_BASE_URL}/api/baskets/products`, {
         productId,
         quantity: amount,
+        colorId,
+        sizeId,
       }, {
         params: {
           userAccessKey: context.state.userAccessKey,
@@ -104,6 +111,11 @@ export default createStore({
         .then((response) => {
           context.commit('updateCartProductsData', response.data.items);
           context.commit('syncCartProducts');
+        }).catch(() => {
+          console.log(productId);
+          console.log(colorId);
+          console.log(sizeId);
+          console.log(amount);
         });
     },
     updateCartProductAmount(context, { productId, amount }) {

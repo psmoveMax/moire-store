@@ -1,5 +1,6 @@
 <template>
-  <main class="content container" v-if="productStatus.isLoading">Загрузка товара...</main>
+  <main class="content container" v-if="productStatus.isLoading">Загрузка товара... <p>{{ product }}</p>
+  </main>
   <main class="content container" v-else-if="productStatus.isFailed">Не удалось загрузить товар</main>
   <main class="content container" v-else>
     <div class="content__top">
@@ -21,11 +22,13 @@
         </li>
       </ul>
     </div>
-
+    {{ product.sizes }} <br> <br>
+    {{ product }}
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
-          <img width="570" height="570" :src="product.image.file.url" :alt="product.title">
+          <img width="570" height="570" :src="product.colors[0].gallery[0].file.url" :alt="product.title"
+            id="product_image_current">
         </div>
       </div>
 
@@ -36,27 +39,47 @@
         </h2>
         <div class="item__form">
           <form class="form" action="#" method="POST" @submit.prevent="doAddToCart">
-            <b class="item__price">
-              {{ product.pricePretty }} ₽
-            </b>
-
-            <fieldset class="form__block">
-              <legend class="form__legend">Цвет:</legend>
-              <ul class="colors">
-                <li class="colors__item" v-for="color in  product.colors " :key="color.id">
-                  <label class="colors__label" :for="color.id">
-                    <input class="colors__radio sr-only" type="radio" :id="color.id" name="color" :value="color.id">
-                    <span class="colors__value" :value="color.id" :style="{ backgroundColor: color.code }"> </span>
-                  </label>
-                </li>
-              </ul>
-            </fieldset>
 
             <div class="item__row">
               <div class="form__counter">
                 <CounterItem :size="12" :amount="productAmount" @update-amount="doUpdateAmount" />
               </div>
-              <button class="button button--primery" type="submit" :disabled="productAddSend">
+              <b class="item__price" style="align-self: center;">
+                {{ product.pricePretty }} ₽
+              </b>
+
+            </div>
+            <div class="item__row">
+              <fieldset class="form__block">
+                <legend class="form__legend">Цвет</legend>
+                <ul class="colors">
+                  <li class="colors__item" v-for="(color, index) in  product.colors " :key="color.color.id">
+                    <label v-if="index === 0" class="colors__label"
+                      :for="'product-' + product.id + 'color-' + color.color.id">
+                      <input class="colors__radio sr-only " type="radio" :value="color.color.code"
+                        :id="'product-' + product.id + 'color-' + color.color.id" :name="product.id" checked>
+                      <span aria-hidden="true" class="colors__value" :value="color.color.id"
+                        :style="{ backgroundColor: color.color.code }" @click="changeImage(color, 'image-' + product.id)">
+                      </span>
+                    </label>
+                    <label v-else class="colors__label" :for="'product-' + product.id + 'color-' + color.color.id">
+                      <input class="colors__radio sr-only " type="radio" :value="color.color.code"
+                        :id="'product-' + product.id + 'color-' + color.color.id" :name="product.id">
+                      <span aria-hidden="true" class="colors__value" :style="{ backgroundColor: color.color.code }"
+                        @click="changeImage(color, 'image-' + product.id)">
+                      </span>
+                    </label>
+                  </li>
+                </ul>
+
+              </fieldset>
+              <fieldset class="form__block">
+                <legend class="form__legend" style="padding-left: 14px;">Размер</legend>
+                <BaseSelect :sizes="product.sizes" @update-amount="doUpdateSize" />
+              </fieldset>
+            </div>
+            <div style="display: grid;  width: 40%;">
+              <button class="button button--primery" type="submit" :disabled="productAddSend" @click="doUpdates">
                 В корзину
               </button>
               <BaseModal v-model:open="isShowAddedMessage">
@@ -96,39 +119,33 @@
 
         <div class="item__content">
           <p>
-            Навигация GPS, ГЛОНАСС, BEIDOU Galileo и QZSS<br>
-            Синхронизация со смартфоном<br>
-            Связь по Bluetooth Smart, и Wi-Fi<br>
-            Поддержка сторонних приложений<br>
+            {{ product.title }}<br>
           </p>
-
-          <a href="#">
-            Все характеристики
-          </a>
 
           <h3>Что это?</h3>
 
           <p>
-            Wahoo ELEMNT BOLT GPS – это велокомпьютер, который позволяет оптимизировать свои велотренировки,
-            сделав их максимально эффективными. Wahoo ELEMNT BOLT GPS синхронизируется с датчиками,
-            объединяя полученную с них информацию. Данные отображаются на дисплее, а также сохраняются на
-            смартфоне. При этом на мобильное устройство можно установить как фирменное приложение, так и
-            различные приложения сторонних разработчиков. Велокомпьютер точно отслеживает местоположение,
-            принимая сигнал с целого комплекса спутников. Эта информация позволяет смотреть уже преодоленные
-            маршруты и планировать новые велопрогулки.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, nisi dolorem consequuntur vel incidunt
+            doloremque iste explicabo. Ipsa, deserunt voluptas assumenda, cupiditate illum magnam iusto qui commodi enim
+            debitis sunt.
+            Necessitatibus architecto rem odio iure, a deleniti sapiente iusto minima quisquam tempore veritatis et
+            deserunt incidunt adipisci perspiciatis placeat illum, beatae modi vel? Fugit asperiores rem laboriosam
+            quibusdam quasi libero.
+            Inventore officiis a voluptatem dolor vitae dignissimos commodi. Itaque rerum illum amet corporis! Dolorem
+            tenetur iure quis maxime quisquam ullam dignissimos officia aliquid? Itaque culpa cumque autem illo a illum!
+            Assumenda consequatur optio vel modi consequuntur facere neque aspernatur laboriosam, dolore minima maxime
+            itaque sit incidunt sint aut sunt! Aspernatur possimus corrupti est neque earum deserunt labore expedita ut
+            eaque.
+            Praesentium repellat quod omnis aut perferendis harum ratione possimus inventore facere laboriosam commodi
+            quasi eligendi quaerat excepturi temporibus, alias explicabo ipsum eveniet! Repellat nisi quod accusantium
+            consequuntur nobis nulla impedit.
           </p>
 
           <h3>Дизайн</h3>
 
           <p>
-            Велокомпьютер Wahoo ELEMNT BOLT очень компактный. Размеры устройства составляют всего 74,6 x 47,3 x
-            22,1 мм. что не превышает габариты смартфона. Корпус гаджета выполнен из черного пластика.
-            обращенной к пользователю стороне расположен дисплей диагональю 56 мм. дисплей выводятся
-            координаты и скорость, также полученная смартфона и синхронизированных датчиков информация:
-            интенсивность, скорость вращения педалей, пульс и т.д. (датчики не входят в комплект поставки).
-            Корпус велокомпьютера имеет степень защиты от влаги IPX7. Это означает, что устройство не боится
-            пыли, также выдерживает кратковременное (до 30 минут) погружение в воду на глубину не более
-            1 метра.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis quo iure porro incidunt ipsam maxime corrupti
+            adipisci quam illum mollitia sit fugit cupiditate officiis soluta aliquam, laboriosam repellendus vel tempore.
           </p>
         </div>
       </div>
@@ -141,14 +158,16 @@ import {
   defineComponent, ref,
 } from 'vue';
 import CounterItem from '@/components/CounterItem.vue';
+import BaseSelect from '@/components/BaseSelect.vue';
 import { useStore } from 'vuex';
 import BaseModal from '@/components/BaseModal.vue';
 import { useRoute } from 'vue-router';
 import useProduct from '@/hooks/useProduct';
+import { NOT_PIC_URL } from '@/config';
 
 export default defineComponent({
 
-  components: { CounterItem, BaseModal },
+  components: { CounterItem, BaseModal, BaseSelect },
 
   setup() {
     const $store = useStore();
@@ -159,29 +178,63 @@ export default defineComponent({
       fetchProduct,
       status: productStatus,
     } = useProduct();
-
+    // document.getElementsByClassName('colors__value')[0].attributes.value.value
     const productAmount = ref(1);
+    const productColor = ref(1);
+    const productSize = ref(1);
     const productAdded = ref(false);
     const productAddSend = ref(false);
     const isShowAddedMessage = ref(false);
     const doAddToCart = () => {
       productAdded.value = false;
       productAddSend.value = true;
-      $store.dispatch('addProductToCart', { productId: product.value.id, amount: productAmount.value })
+      $store.dispatch('addProductToCart', {
+        productId: product.value.id,
+        amount: productAmount.value,
+        colorId: productColor.value,
+        sizeId: productSize.value,
+      })
         .then(() => {
           isShowAddedMessage.value = true;
           productAdded.value = true;
           productAddSend.value = false;
+        }).catch((error) => {
+          console.log(error);
+          console.log('polar');
         });
     };
     const doUpdateAmount = (localValue) => {
       productAmount.value = localValue;
     };
 
-    fetchProduct($route.params.id);
+    const doUpdateSize = (localValue) => {
+      productSize.value = localValue;
+    };
 
+    const doUpdates = () => {
+      if (productColor.value === 1) {
+        productColor.value = document.querySelector('.form__select').selectedOptions[0].value;
+      }
+      if (productSize.value === 1) {
+        productSize.value = document.querySelector('.form__select').selectedOptions[0].value;
+      }
+    };
+
+    const changeImage = (colorCurrent) => {
+      console.log(colorCurrent);
+      productColor.value = colorCurrent.color.id;
+      console.log(productColor.value);
+      if (colorCurrent.gallery !== null) {
+        document.getElementById('product_image_current').src = colorCurrent.gallery[0].file.url;
+      } else {
+        document.getElementById('product_image_current').src = NOT_PIC_URL;
+      }
+    };
+
+    fetchProduct($route.params.id);
     return {
       productAmount,
+      productColor,
       productData: product,
       productStatus,
       productAdded,
@@ -192,6 +245,9 @@ export default defineComponent({
 
       doAddToCart,
       doUpdateAmount,
+      doUpdateSize,
+      changeImage,
+      doUpdates,
     };
   },
 });

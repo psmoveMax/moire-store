@@ -165,6 +165,7 @@ export default {
         .catch((error) => {
           this.formError = error.response.data.error.request || {};
           this.formErrorMessage = error.response.data.error.message;
+          console.log('tt');
         });
     },
   },
