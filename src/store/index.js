@@ -5,7 +5,8 @@ import { API_BASE_URL } from '@/config';
 export default createStore({
   state: {
     cartProducts: [],
-    userAccessKey: null,
+    userAccessKey: '7a446b23ede144d607088a1bc2f56448',
+    // userAccessKey: [],
     cartProductsData: [],
     orderInfo: null,
   },
@@ -25,19 +26,25 @@ export default createStore({
       }
     },
     deleteCartProduct(state, productId) {
+      console.log(productId);
       state.cartProducts = state.cartProducts.filter((item) => item.productId !== productId);
     },
     updateUserAccessKey(state, accessKey) {
-      state.userAccessKey = accessKey;
+      state.userAccessKey = '7a446b23ede144d607088a1bc2f56448';
+      console.log(accessKey);
+      // state.userAccessKey = accessKey;
     },
     updateCartProductsData(state, items) {
       state.cartProductsData = items;
+      console.log(state.cartProductsData);
     },
     syncCartProducts(state) {
       state.cartProducts = state.cartProductsData.map((item) => {
         return {
-          productId: item.product.id,
+          productId: item.id,
           amount: item.quantity,
+          color: item.color,
+          size: item.size,
         };
       });
     },
@@ -45,14 +52,13 @@ export default createStore({
   getters: {
     cartDetailProducts(state) {
       return state.cartProducts.map((item) => {
-        const { product } = state.cartProductsData.find((p) => p.product.id === item.productId);
-
+        const { product } = state.cartProductsData.find((p) => p.id === item.productId);
         return {
           ...item,
           product: {
             ...product,
-            image: product.image.file.url,
           },
+          image: item.color.gallery[0].file.url,
         };
       });
     },
@@ -68,7 +74,8 @@ export default createStore({
       return axios
         .get(`${API_BASE_URL}/api/orders/${orderId}`, {
           params: {
-            userAccessKey: context.state.userAccessKey,
+            userAccessKey: '7a446b23ede144d607088a1bc2f56448',
+            // userAccessKey: context.state.userAccessKey,
           },
         })
         .then((response) => {
@@ -80,7 +87,8 @@ export default createStore({
       return axios
         .get(`${API_BASE_URL}/api/baskets/`, {
           params: {
-            userAccessKey: context.state.userAccessKey,
+            userAccessKey: '7a446b23ede144d607088a1bc2f56448',
+            // userAccessKey: context.state.userAccessKey,
           },
         })
         .then((response) => {
@@ -105,7 +113,8 @@ export default createStore({
         sizeId,
       }, {
         params: {
-          userAccessKey: context.state.userAccessKey,
+          userAccessKey: '7a446b23ede144d607088a1bc2f56448',
+          // userAccessKey: context.state.userAccessKey,
         },
       })
         .then((response) => {
@@ -124,11 +133,12 @@ export default createStore({
         return 0;
       }
       return axios.put(`${API_BASE_URL}/api/baskets/products`, {
-        productId,
+        basketItemId: productId,
         quantity: amount,
       }, {
         params: {
-          userAccessKey: context.state.userAccessKey,
+          userAccessKey: '7a446b23ede144d607088a1bc2f56448',
+          // userAccessKey: context.state.userAccessKey,
         },
       })
         .then((response) => {
@@ -142,15 +152,19 @@ export default createStore({
       return axios
         .delete(`${API_BASE_URL}/api/baskets/products`, {
           data: {
-            productId: productID,
+            basketItemId: productID,
           },
           params: {
-            userAccessKey: context.state.userAccessKey,
+            userAccessKey: '7a446b23ede144d607088a1bc2f56448',
+            // userAccessKey: context.state.userAccessKey,
           },
         })
         .then((response) => {
           context.commit('updateCartProductsData', response.data.items);
           context.commit('syncCartProducts');
+        }).catch((error) => {
+          console.log(error);
+          console.log(productID);
         });
     },
   },

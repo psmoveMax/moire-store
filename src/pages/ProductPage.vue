@@ -207,13 +207,13 @@ export default defineComponent({
       productAmount.value = localValue;
     };
 
-    const doUpdateSize = (localValue) => {
-      productSize.value = localValue;
+    const doUpdateSize = () => {
+      productSize.value = document.querySelector('.form__select').value;
     };
 
     const doUpdates = () => {
       if (productColor.value === 1) {
-        productColor.value = document.querySelector('.form__select').selectedOptions[0].value;
+        productColor.value = document.querySelector('.colors__value').attributes.value.value;
       }
       if (productSize.value === 1) {
         productSize.value = document.querySelector('.form__select').selectedOptions[0].value;

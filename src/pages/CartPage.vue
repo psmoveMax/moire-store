@@ -39,7 +39,7 @@
           </p>
 
           <router-link v-slot="{ navigate }" :to="{ name: 'order' }" custom>
-            <button class="cart__button button button--primery" :disabled="totalPricePretty > 0"
+            <button class="cart__button button button--primery" :disabled="totalPricePretty === 0"
               @click="navigate">Оформить
               заказ</button>
           </router-link>
