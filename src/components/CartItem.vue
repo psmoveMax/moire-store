@@ -1,5 +1,4 @@
 <template>
-  {{ item }}
   <li class="cart__item product">
     <div class="product__pic">
       <img :src="item.image" width="120" height="120" alt="item.product.title">
@@ -7,6 +6,12 @@
     <h3 class="product__title">
       {{ item.product.title }}
     </h3>
+
+    <span class="product__color">
+      Цвет: &nbsp; <span class="colors__value"
+        :style="{ 'background-color': item.color.color.code, 'display': 'inline-block' }"></span> &nbsp;{{
+          item.color.color.title }}
+    </span>
     <span class="product__code">
       Артикул: {{ item.product.id }}
     </span>

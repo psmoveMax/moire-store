@@ -1,7 +1,7 @@
 <template>
   <div style="display: inherit; align-items: center;">
-    <button type="button" aria-label="Убрать один товар">
-      <svg :width="size" :height="size" fill="currentColor" @click.prevent="MinusItem">
+    <button type="button" aria-label="Убрать один товар" @click.prevent="MinusItem">
+      <svg :width="size" :height="size" fill="currentColor">
         <use xlink:href="#icon-minus"></use>
       </svg>
     </button>

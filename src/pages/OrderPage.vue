@@ -53,7 +53,8 @@
             <ul class="cart__options options">
               <li class="options__item">
                 <label for="cart_sam" class="options__label">
-                  <input id="cart_sam" class="options__radio sr-only" type="radio" name="delivery" value="0" checked="">
+                  <input id="cart_sam" class="options__radio sr-only" type="radio" value="1"
+                    v-model="formData.deliveryTypeId" checked="">
                   <span class="options__value">
                     Самовывоз <b>бесплатно</b>
                   </span>
@@ -61,7 +62,8 @@
               </li>
               <li class="options__item">
                 <label for="cart_curier" class="options__label">
-                  <input id="cart_curier" class="options__radio sr-only" type="radio" name="delivery" value="500">
+                  <input id="cart_curier" class="options__radio sr-only" type="radio" name="delivery"
+                    v-model="formData.deliveryTypeId" value="2">
                   <span class="options__value">
                     Курьером <b>500 ₽</b>
                   </span>
@@ -73,7 +75,8 @@
             <ul class="cart__options options">
               <li class="options__item">
                 <label for="pay_card" class="options__label">
-                  <input id="pay_card" class="options__radio sr-only" type="radio" name="pay" value="card">
+                  <input id="pay_card" class="options__radio sr-only" type="radio" name="pay" value="1" checked=""
+                    v-model="formData.paymentTypeId">
                   <span class="options__value">
                     Картой при получении
                   </span>
@@ -81,7 +84,8 @@
               </li>
               <li class="options__item">
                 <label for="pay_cash" class="options__label">
-                  <input id="pay_cash" class="options__radio sr-only" type="radio" name="pay" value="cash">
+                  <input id="pay_cash" class="options__radio sr-only" type="radio" name="pay" value="2"
+                    v-model="formData.paymentTypeId">
                   <span class="options__value">
                     Наличными при получении
                   </span>
@@ -90,14 +94,14 @@
             </ul>
           </div>
         </div>
-
         <div class="cart__block">
           <ul class="cart__orders" id="info">
             <li class="cart__order" v-for="product in  cartProductsData" :key="product.id">
               <h3>{{ product.product.title }}</h3>
               <b>{{ product.price }} ₽</b>
-              <span>Артикул: {{ product.product.id }}</span>
-              <span>Кол-во: {{ product.quantity }}</span>
+              <span class="cart_order_art">Артикул: {{ product.product.id }} &nbsp; <span class="colors__value"
+                  :style="{ 'background-color': product.color.color.code, 'display': 'inline-block' }"></span></span>
+              <span class="cart_order_quantity">Кол-во: {{ product.quantity }}</span>
             </li>
           </ul>
 
@@ -152,6 +156,7 @@ export default {
       this.formErrorMessage = '';
       axios.post(`${API_BASE_URL}/api/orders`, {
         ...this.formData,
+
       }, {
         params: {
           userAccessKey: this.$store.state.userAccessKey,

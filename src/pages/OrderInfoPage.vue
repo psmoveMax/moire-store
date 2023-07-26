@@ -75,7 +75,15 @@
                 Способ оплаты
               </span>
               <span class="dictionary__value">
-                картой при получении
+                {{ orderInfo.paymentType }}
+              </span>
+            </li>
+            <li class="dictionary__item">
+              <span class="dictionary__key">
+                Способ доставки
+              </span>
+              <span class="dictionary__value">
+                {{ orderInfo.deliveryType.title }}. Цена: {{ orderInfo.deliveryType.price }} ₽
               </span>
             </li>
             <li class="dictionary__item">
