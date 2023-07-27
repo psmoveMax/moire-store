@@ -9,11 +9,12 @@
 
     <span class="product__color">
       Цвет: &nbsp; <span class="colors__value"
-        :style="{ 'background-color': item.color.color.code, 'display': 'inline-block' }"></span> &nbsp;{{
-          item.color.color.title }}
+        :style="{ 'background-color': item.color.color.code, 'display': 'inline-block', 'border': '1px solid black' }"></span>
+      &nbsp;{{
+        item.color.color.title }}
     </span>
     <span class="product__code">
-      Артикул: {{ item.product.id }}
+      Артикул: {{ item.product.id }}<br> Размер: {{ item.size.title }}
     </span>
 
     <div class="product__counter form__counter">

@@ -100,7 +100,10 @@
               <h3>{{ product.product.title }}</h3>
               <b>{{ product.price }} ₽</b>
               <span class="cart_order_art">Артикул: {{ product.product.id }} &nbsp; <span class="colors__value"
-                  :style="{ 'background-color': product.color.color.code, 'display': 'inline-block' }"></span></span>
+                  :style="{ 'background-color': product.color.color.code, 'display': 'inline-block', 'border': '1px solid black' }"></span>
+                &nbsp;
+                Размер: {{
+                  product.size.title }}</span>
               <span class="cart_order_quantity">Кол-во: {{ product.quantity }}</span>
             </li>
           </ul>

@@ -22,8 +22,7 @@
         </li>
       </ul>
     </div>
-    {{ product.sizes }} <br> <br>
-    {{ product }}
+
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
