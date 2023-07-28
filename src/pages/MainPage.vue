@@ -5,7 +5,7 @@
         Каталог
       </h1>
       <span class="content__info">
-        152 товара
+        {{ countProducts }} товара
       </span>
     </div>
 
@@ -100,7 +100,6 @@ export default {
   },
   methods: {
     loadProducts() {
-      console.log('start loading load products');
       this.productsLoading = true;
       this.productsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
@@ -129,7 +128,6 @@ export default {
       }
 
       this.loadProductsTimer = setTimeout(() => {
-        console.log('axios');
         axios
           .get(`${API_BASE_URL}/api/products`, {
             params,

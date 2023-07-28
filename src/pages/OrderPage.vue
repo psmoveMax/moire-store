@@ -99,17 +99,19 @@
             <li class="cart__order" v-for="product in  cartProductsData" :key="product.id">
               <h3>{{ product.product.title }}</h3>
               <b>{{ product.price }} ₽</b>
-              <span class="cart_order_art">Артикул: {{ product.product.id }} &nbsp; <span class="colors__value"
-                  :style="{ 'background-color': product.color.color.code, 'display': 'inline-block', 'border': '1px solid black' }"></span>
+              <span class="cart_order_art">Артикул: {{ product.product.id }} &nbsp; <span class="colors__value" :style="{
+                'background-color': product.color.color.code, 'display': 'inline-block', 'border': '1px solid #e02d71',
+                'opacity': '.5'
+              }"></span>
                 &nbsp;
                 Размер: {{
                   product.size.title }}</span>
               <span class="cart_order_quantity">Кол-во: {{ product.quantity }}</span>
             </li>
           </ul>
-
           <div class="cart__total">
-            <p>Доставка: <b>500 ₽</b></p>
+            <p v-if="formData.deliveryTypeId === '2'">Доставка: <b>500 ₽</b></p>
+            <p v-else>Доставка: <b>Бесплатно</b></p>
             <p>Итого: <b>{{ totalAmount }}</b> товара на сумму <b>{{ totalPrice }} ₽</b></p>
           </div>
 

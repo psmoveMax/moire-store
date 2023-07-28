@@ -5,8 +5,7 @@ import { API_BASE_URL } from '@/config';
 export default createStore({
   state: {
     cartProducts: [],
-    userAccessKey: '7a446b23ede144d607088a1bc2f56448',
-    // userAccessKey: [],
+    userAccessKey: [],
     cartProductsData: [],
     orderInfo: null,
   },
@@ -30,13 +29,10 @@ export default createStore({
       state.cartProducts = state.cartProducts.filter((item) => item.productId !== productId);
     },
     updateUserAccessKey(state, accessKey) {
-      state.userAccessKey = '7a446b23ede144d607088a1bc2f56448';
-      console.log(accessKey);
-      // state.userAccessKey = accessKey;
+      state.userAccessKey = accessKey;
     },
     updateCartProductsData(state, items) {
       state.cartProductsData = items;
-      console.log(state.cartProductsData);
     },
     syncCartProducts(state) {
       state.cartProducts = state.cartProductsData.map((item) => {
@@ -74,8 +70,7 @@ export default createStore({
       return axios
         .get(`${API_BASE_URL}/api/orders/${orderId}`, {
           params: {
-            userAccessKey: '7a446b23ede144d607088a1bc2f56448',
-            // userAccessKey: context.state.userAccessKey,
+            userAccessKey: context.state.userAccessKey,
           },
         })
         .then((response) => {
@@ -87,12 +82,11 @@ export default createStore({
       return axios
         .get(`${API_BASE_URL}/api/baskets/`, {
           params: {
-            userAccessKey: '7a446b23ede144d607088a1bc2f56448',
-            // userAccessKey: context.state.userAccessKey,
+            userAccessKey: context.state.userAccessKey,
           },
         })
         .then((response) => {
-          if (!context.state.userAccessKey) {
+          if (context.state.userAccessKey) {
             localStorage.setItem('userAccessKey', response.data.user.accessKey);
             context.commit('updateUserAccessKey', response.data.user.accessKey);
           }
@@ -113,8 +107,7 @@ export default createStore({
         sizeId,
       }, {
         params: {
-          userAccessKey: '7a446b23ede144d607088a1bc2f56448',
-          // userAccessKey: context.state.userAccessKey,
+          userAccessKey: context.state.userAccessKey,
         },
       })
         .then((response) => {
@@ -137,8 +130,7 @@ export default createStore({
         quantity: amount,
       }, {
         params: {
-          userAccessKey: '7a446b23ede144d607088a1bc2f56448',
-          // userAccessKey: context.state.userAccessKey,
+          userAccessKey: context.state.userAccessKey,
         },
       })
         .then((response) => {
@@ -155,8 +147,7 @@ export default createStore({
             basketItemId: productID,
           },
           params: {
-            userAccessKey: '7a446b23ede144d607088a1bc2f56448',
-            // userAccessKey: context.state.userAccessKey,
+            userAccessKey: context.state.userAccessKey,
           },
         })
         .then((response) => {

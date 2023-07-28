@@ -2,7 +2,6 @@
   <header v-if="!isSomeOpen" class="header">
     <div class="header__wrapper container">
       <span class="header__info">Каталог</span>
-
       <router-link class="header__logo" :to="{ name: 'main' }">
         <img src="../public/img/svg/logo-moire.svg" alt="Логотип интернет магазина Moire" width="116" height="34">
       </router-link>
