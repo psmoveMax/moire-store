@@ -4,9 +4,19 @@
       <h1 class="content__title">
         Каталог
       </h1>
+
       <span class="content__info">
         {{ countProducts }} товара
       </span>
+      <div class="count_products">
+        <span>Количество товаров: </span>
+        <select class="form__select form_box" v-model="productsPerPage" @change="loadProducts" id="productPerPage"
+          aria-label="lorem ipsum">
+          <option for="productPerPage">9</option>
+          <option for="productPerPage">18</option>
+          <option for="productPerPage">27</option>
+        </select>
+      </div>
     </div>
 
     <div class="content__catalog">
@@ -15,10 +25,15 @@
         v-model:category-id="filterCategoryId" v-model:color-id="filterColorId" v-model:material-id="filterMaterialId"
         v-model:season-id="filterSeasonId" />
       <section class="catalog">
-        <div v-if="productsLoading">Загрузка товаров...</div>
-        <div v-if="productsLoadingFailed">Произошла ошибка при загрузке товаров! <button>
+        <div v-if="productsLoading" class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div v-if="productsLoadingFailed">Произошла ошибка при загрузке товаров! <button
             @click.prevent='loadProducts'>Попробовать еще раз</button></div>
-        <ProductList :products="products" />
+        <ProductList v-if="productsLoading === false" :products="products" />
 
         <BasePagination v-model="page" :count="countProducts" :per-page="productsPerPage" />
       </section>
@@ -35,7 +50,11 @@ import axios from 'axios';
 import { API_BASE_URL, NOT_PIC_URL } from '@/config';
 
 export default {
-  components: { ProductList, BasePagination, ProductFilter },
+  components: {
+    ProductList,
+    BasePagination,
+    ProductFilter,
+  },
 
   data() {
     return {
@@ -47,8 +66,7 @@ export default {
       filterSeasonId: [],
 
       page: 1,
-      productsPerPage: 6,
-
+      productsPerPage: 9,
       productsData: null,
 
       productsLoading: false,
@@ -99,6 +117,7 @@ export default {
     },
   },
   methods: {
+
     loadProducts() {
       this.productsLoading = true;
       this.productsLoadingFailed = false;

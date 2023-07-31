@@ -5,14 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server/server.js"
   },
   "dependencies": {
     "@vue/runtime-core": "^3.3.4",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
-    "express": "^4.18.2",
     "vue": "^3.2.36",
+    "vue-mq": "^1.0.1",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
   },
@@ -31,6 +32,7 @@
     "eslint-plugin-vue": "^9.15.0",
     "eslint-plugin-vuejs-accessibility": "^1.1.0",
     "stylus": "^0.55.0",
-    "stylus-loader": "^6.1.0"
+    "stylus-loader": "^6.1.0",
+    "vue3-mq": "^3.1.3"
   }
 }

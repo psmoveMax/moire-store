@@ -1,5 +1,5 @@
 <template>
-  <select name="select" class="form__select" @change="changeInput()">
+  <select name="select" class="form__select form_box" @change="changeInput()">
 
     <option :value="size.id" v-for="size in $attrs.sizes" :key="size.id">{{ size.title }}</option>
   </select>

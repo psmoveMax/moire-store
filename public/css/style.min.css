@@ -1222,7 +1222,9 @@ a {
   -ms-flex-direction: column;
   flex-direction: column;
   -ms-flex-item-align: stretch;
-  align-self: stretch
+  align-self: stretch;
+  align-items: center;
+
 }
 
 .catalog__list {
@@ -1468,6 +1470,80 @@ a {
   justify-content: space-between;
   grid-column: 2/3;
   grid-row: 3/4
+}
+
+
+
+.form_box {
+  margin-left: 10px;
+  transition: 0.5s;
+  padding: 12px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+  border-radius: 10px;
+  width: auto;
+}
+
+
+.form_box:hover {
+  transition: 0.5s;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+.form_box select option {
+  padding: 30px;
+}
+
+.count_products {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #e02d71;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #e02d71 transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 
