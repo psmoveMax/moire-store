@@ -81,13 +81,20 @@
               <button class="button button--primery" type="submit" :disabled="productAddSend" @click="doUpdates">
                 В корзину
               </button>
-              <BaseModal v-model:open="isShowAddedMessage">
+
+              <!-- <BaseModal v-model:open="isShowAddedMessage">
                 Товар добавлен в корзину
-              </BaseModal>
+              </BaseModal> -->
+
             </div>
 
             <div v-show="productAdded">Товар добавлен в корзину</div>
-            <div v-show="productAddSend">Добавляем товар в корзину</div>
+            <div v-show="productAddSend" class="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
           </form>
         </div>
       </div>
@@ -159,14 +166,14 @@ import {
 import CounterItem from '@/components/CounterItem.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 import { useStore } from 'vuex';
-import BaseModal from '@/components/BaseModal.vue';
+// import BaseModal from '@/components/BaseModal.vue';
 import { useRoute } from 'vue-router';
 import useProduct from '@/hooks/useProduct';
 import { NOT_PIC_URL } from '@/config';
 
 export default defineComponent({
 
-  components: { CounterItem, BaseModal, BaseSelect },
+  components: { CounterItem, BaseSelect },
 
   setup() {
     const $store = useStore();

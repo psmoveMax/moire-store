@@ -3,9 +3,9 @@
     <div class="product__pic">
       <img :src="item.image" width="120" height="120" alt="item.product.title">
     </div>
-    <h3 class="product__title">
+    <router-link :to="{ name: 'product', params: { id: item.product.id } }" class="product__title">
       {{ item.product.title }}
-    </h3>
+    </router-link>
 
     <span class="product__color">
       Цвет: &nbsp; <span class="colors__value" :style="{

@@ -134,8 +134,15 @@ a {
   vertical-align: middle;
   text-transform: uppercase;
   font-weight: 700;
-  cursor: pointer
+  cursor: pointer;
+  transition: 0.5s;
+
 }
+
+
+
+
+
 
 .button:disabled {
   opacity: .5;
@@ -151,7 +158,9 @@ a {
 
 .button--primery:not(:disabled):focus,
 .button--primery:not(:disabled):hover {
-  background-color: #150c26
+  background-color: #150c26;
+
+  border-radius: 10px;
 }
 
 .button--second {
@@ -316,7 +325,6 @@ a {
 .form__block {
   border: 0;
   padding: 0;
-  margin: 0 0 55px;
 }
 
 .form__legend {
@@ -1046,11 +1054,13 @@ a {
 }
 
 .options__label:hover .options__value {
-  background-color: rgba(224, 45, 113, .2)
+  background-color: rgba(224, 45, 113, .2);
+  transition: 0.4s;
 }
 
 .options__label:hover .options__value::before {
-  border: 4px solid #fff
+  border: 4px solid #fff;
+  transition: 0.4s;
 }
 
 .options__radio:focus~.options__value {
@@ -1058,16 +1068,17 @@ a {
 }
 
 .options__radio:focus~.options__value::before {
-  background-color: #222
+  background-color: #222;
 }
 
 .options__radio:checked~.options__value {
   background-color: #e02d71;
-  color: #fff
+  color: #fff;
+  transition: 0.4s;
 }
 
 .options__radio:checked~.options__value::before {
-  border: 4px solid #fff
+  border: 4px solid #fff;
 }
 
 .dictionary {
@@ -1486,6 +1497,7 @@ a {
   outline: none;
   border-radius: 10px;
   width: auto;
+  cursor: pointer;
 }
 
 
