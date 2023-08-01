@@ -79,7 +79,8 @@
             <button class="filter__submit button button--primery" type="submit">
                 Применить
             </button>
-            <button class="filter__reset button button--second" type="button" @click.prevent="reset">
+            <button v-if="resetButton === true" class="filter__reset button button--second" type="button"
+                @click.prevent="reset">
                 Сбросить
             </button>
         </form>
@@ -106,12 +107,13 @@ export default {
             currentSeasonId: [],
             materialsData: null,
             seasonsData: null,
+            resetButton: false,
         }
     },
 
 
     props: ['priceFrom', 'priceTo', 'categoryId', 'colorId', 'materialId', 'seasonId'],
-    // props: ['priceFrom', 'priceTo', 'categoryId', 'colorId'],
+
     computed: {
         categories() {
             return this.categoriesData ? this.categoriesData.items : [];
@@ -167,6 +169,7 @@ export default {
                 .then((response) => { this.seasonsData = response.data; })
         },
         submit() {
+            this.resetButton = true;
             this.$emit('update:priceFrom', this.currentPriceFrom);
             this.$emit('update:priceTo', this.currentPriceTo);
             this.$emit('update:categoryId', this.currentCategoryId);
@@ -175,6 +178,7 @@ export default {
             this.$emit('update:seasonId', this.currentSeasonId);
         },
         reset() {
+            this.resetButton = false;
             this.$emit('update:priceFrom', 0);
             this.$emit('update:priceTo', 0);
             this.$emit('update:categoryId', 0);

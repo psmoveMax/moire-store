@@ -1,6 +1,8 @@
 <template>
   <BaseFormField :title="title" :error="error">
-    <input id="form_fio" class="form__input" :type="type" :placeholder="placeholder" :aria-label="title">
+
+    <input id="form_fio" v-model="dataValue" class="form__input" :type="type" :placeholder="placeholder"
+      :aria-label="title">
   </BaseFormField>
 </template>
 
@@ -8,11 +10,7 @@
 import formFieldMixin from '@/mixins/formFieldMixin';
 
 export default {
-  props: {
-    type: {
-      default: 'text',
-    }
-  },
+  props: ['value', 'type'],
   mixins: [formFieldMixin]
 }
 </script>

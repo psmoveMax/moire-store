@@ -63,7 +63,6 @@ export default {
     ...mapActions(['deleteProductCart']),
 
     deleteProduct(productId) {
-      console.log(productId);
       this.deleteProductCart({ productID: productId });
     },
     updateAmount(localValue) {

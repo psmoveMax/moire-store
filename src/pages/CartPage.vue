@@ -38,7 +38,7 @@
             Итого: <span>{{ totalPricePretty }} ₽</span>
           </p>
 
-          <router-link v-slot="{ navigate }" :to="{ name: 'order' }" custom>
+          <router-link v-if="this.totalPrice > 0" v-slot="{ navigate }" :to="{ name: 'order' }" custom>
             <button class="cart__button button button--primery" :disabled="totalPricePretty === 0"
               @click="navigate">Оформить
               заказ</button>

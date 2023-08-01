@@ -22,9 +22,6 @@
       <h1 class="content__title">
         Корзина
       </h1>
-      <span class="content__info">
-        3 товара
-      </span>
     </div>
 
     <section class="cart">
@@ -50,11 +47,12 @@
 
           <div class="cart__options">
             <h3 class="cart__title">Доставка</h3>
+            <p v-if="formError.deliveryTypeId" style="color:red">{{ formError.deliveryTypeId }}</p>
             <ul class="cart__options options">
               <li class="options__item">
                 <label for="cart_sam" class="options__label">
                   <input id="cart_sam" class="options__radio sr-only" type="radio" value="1"
-                    v-model="formData.deliveryTypeId" checked="">
+                    v-model="formData.deliveryTypeId" v-on:click="paymentsDelivery(1)">
                   <span class="options__value">
                     Самовывоз <b>бесплатно</b>
                   </span>
@@ -63,7 +61,7 @@
               <li class="options__item">
                 <label for="cart_curier" class="options__label">
                   <input id="cart_curier" class="options__radio sr-only" type="radio" name="delivery"
-                    v-model="formData.deliveryTypeId" value="2">
+                    v-model="formData.deliveryTypeId" value="2" v-on:click="paymentsDelivery(2)">
                   <span class="options__value">
                     Курьером <b>500 ₽</b>
                   </span>
@@ -71,27 +69,21 @@
               </li>
             </ul>
 
-            <h3 class="cart__title">Оплата</h3>
-            <ul class="cart__options options">
-              <li class="options__item">
-                <label for="pay_card" class="options__label">
-                  <input id="pay_card" class="options__radio sr-only" type="radio" name="pay" value="1" checked=""
-                    v-model="formData.paymentTypeId">
-                  <span class="options__value">
-                    Картой при получении
-                  </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label for="pay_cash" class="options__label">
-                  <input id="pay_cash" class="options__radio sr-only" type="radio" name="pay" value="2"
-                    v-model="formData.paymentTypeId">
-                  <span class="options__value">
-                    Наличными при получении
-                  </span>
-                </label>
-              </li>
-            </ul>
+            <div v-if="paymentMethods">
+              <h3 class="cart__title">Оплата</h3>
+              <p v-if="formError.paymentTypeId" style="color:red">{{ formError.paymentTypeId }}</p>
+              <ul class="cart__options options">
+                <li class="options__item" v-for="method in  paymentMethods.data" :key="method.id">
+                  <label :for="'method-' + method.id" class="options__label">
+                    <input :id="'method-' + method.id" class="options__radio sr-only" type="radio"
+                      :name="'method-' + method.id" :value="method.id" v-model="formData.paymentTypeId">
+                    <span class="options__value">
+                      {{ method.title }}
+                    </span>
+                  </label>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="cart__block">
@@ -149,19 +141,21 @@ export default {
       formError: {},
       formErrorMessage: '',
       cartProductsData: this.$store.state.cartProductsData,
+      paymentMethods: '',
+
     };
   },
   filters: {
     numberFormat,
 
   },
+
   methods: {
     order() {
       this.formError = {};
       this.formErrorMessage = '';
       axios.post(`${API_BASE_URL}/api/orders`, {
         ...this.formData,
-
       }, {
         params: {
           userAccessKey: this.$store.state.userAccessKey,
@@ -175,12 +169,23 @@ export default {
         .catch((error) => {
           this.formError = error.response.data.error.request || {};
           this.formErrorMessage = error.response.data.error.message;
-          console.log('tt');
+          console.log(this.formData);
+        });
+    },
+    paymentsDelivery(typeId) {
+      axios.get(`${API_BASE_URL}/api/payments?deliveryTypeId=${typeId}`)
+        .then((response) => {
+          console.log(response);
+          this.paymentMethods = response;
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
   computed: {
     ...mapGetters({ products: 'cartDetailProducts', totalPrice: 'cartTotalPrice', totalAmount: 'cartTotalAmount' }),
   },
+
 };
 </script>
