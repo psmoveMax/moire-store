@@ -9,7 +9,7 @@
 
     <span class="product__color">
       Цвет: &nbsp; <span class="colors__value" :style="{
-        'background-color': item.color.color.code, 'display': 'inline-block', 'border': '1px solid #e02d71',
+        'background-color': item.color.color.code, 'display': 'inline-block', 'border': '1px solid black',
         'opacity': '.5'
       }"></span>
       &nbsp;{{
